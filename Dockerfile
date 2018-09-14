@@ -1,28 +1,20 @@
-FROM ruby:2.4.4-alpine
+FROM ruby:2.5.1-alpine
 
 RUN apk add --no-cache --virtual runtime-deps \
   git \
   bash \
-  && apk add --no-cache --virtual build-deps \
-    alpine-sdk \
-    cmake \
-    g++ \
-    openssl-dev
+  openssl-dev \
+  alpine-sdk \
+  cmake \
+  g++
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-RUN gem install pronto -v 0.9.5
-RUN gem install pronto-brakeman -v 0.9.1 \
-  && gem install pronto-fasterer -v 0.9.0 \
-  && gem install pronto-flay -v 0.9.0 \
-  && gem install pronto-haml -v 0.9.0 \
-  && gem install pronto-jshint -v 0.9.0 \
-  && gem install pronto-rails_best_practices -v 0.9.0 \
-  && gem install pronto-reek -v 0.9.1 \
-  && gem install pronto-rubocop -v 0.9.1 \
-  && gem install pronto-scss -v 0.9.1
+ADD Gemfile.pronto /usr/src/app/Gemfile.pronto
 
-RUN apk del build-deps
+RUN gem install bundler
+RUN BUNDLE_GEMFILE=Gemfile.pronto bundle install -j16
 
-CMD ["pronto", "run"]
+
+ENTRYPOINT ["BUNDLE_GEMFILE=Gemfile.pronto","bundle", "exec", "pronto"]

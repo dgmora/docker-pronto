@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'pronto', '= 0.9.5'
+gem 'pronto-brakeman', '= 0.9.1'
+gem 'pronto-fasterer', '= 0.9.0'
+gem 'pronto-flay', '= 0.9.0'
+gem 'pronto-haml', '= 0.9.0'
+gem 'pronto-jshint', '= 0.9.0'
+gem 'pronto-rails_best_practices', '= 0.9.0'
+gem 'pronto-reek', '= 0.9.1'
+gem 'pronto-rubocop', '= 0.9.1'
+gem 'pronto-scss', '= 0.9.1'
